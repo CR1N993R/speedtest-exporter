@@ -1,14 +1,16 @@
 # Speedtest Exporter
 
-This is a simple prometheus exporter for the Speedtest.net cli.
+Speedtest Exporter is a straightforward Prometheus exporter written in Go specifically for the Speedtest.net CLI.
 
 ## Prerequisites
 
-Before running the application the following things need to be done.
+Before running the application, make sure to complete the following steps:
 
-- Install the [Speedtest.net cli](https://www.speedtest.net/en/apps/cli)
+- **Install the [Speedtest.net CLI](https://www.speedtest.net/en/apps/cli)**
 
-## Prometheus example
+## Prometheus Configuration Example
+
+Here's an example configuration snippet for Prometheus:
 
 ```yaml
 scrape_configs:
@@ -20,11 +22,34 @@ scrape_configs:
       - targets: ['127.0.0.1:9798']
 ```
 
-## Configuration
+## Metrics
 
-The following environment variables can be set to configure the application.
+The exporter exposes the following metrics obtained from Speedtest:
 
-### PORT
+- `speedtest_download`: Download speed (B/s)
+- `speedtest_upload`: Upload speed (B/s)
+- `speedtest_jitter`: Jitter (ms)
+- `speedtest_ping`: Ping (ms)
 
-The `PORT` environment variable sets the port on which the webserver starts. If non is set the default port is `9798`.
+## Configuration Options
 
+You can configure the application using the following environment variables:
+
+### `PORT`
+
+- **Description:** Sets the port for the webserver to listen on.
+- **Default:** `9798` if not specified.
+
+## Development
+
+To start the application:
+
+```shell
+make start
+```
+
+To build the application to an executable:
+
+```shell
+make build
+```
