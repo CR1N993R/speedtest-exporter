@@ -21,18 +21,18 @@ jobs:
     - name: Build for multiple platforms
       run: |
         mkdir -p release
-        export GOOS=linux
-        export GOARCH=amd64
+        GOOS=linux
+        GOARCH=amd64
         go build -o release/myapp_${{ GOOS }}_${{ GOARCH }} .
-        export GOARCH=arm64
+        GOARCH=arm64
         go build -o release/myapp_${{ GOOS }}_${{ GOARCH }} .
-        export GOARCH=armv7
+        GOARCH=armv7
         go build -o release/myapp_${{ GOOS }}_${{ GOARCH }} .
 
-        export GOOS=windows
-        export GOARTCH=amd64
+        GOOS=windows
+        GOARTCH=amd64
         go build -o release/myapp_${{ GOOS }}_${{ GOARCH }} .
-        export GOARCH=arm64
+        GOARCH=arm64
         go build -o release/myapp_${{ GOOS }}_${{ GOARCH }} .
 
     - name: Zip built files
