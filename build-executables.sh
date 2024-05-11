@@ -15,7 +15,7 @@ build() {
     SUFFIX=""
   fi
   echo "Building for $OS/$ARCH$ARM_VERSION_SUFFIX..."
-  GOOS=$OS GOARCH=$ARCH GOARM=$ARM_VERSION go build -o "./build/speedtest-exporter${SUFFIX}"
+  GOOS=$OS GOARCH=$ARCH GOARM=$ARM_VERSION go build  -ldflags "-s -w" -o "./build/speedtest-exporter${SUFFIX}"
   cd build
   tar -czvf "./speedtest-exporter-${OS}_${ARCH}${ARM_VERSION_SUFFIX}.tar.gz" "speedtest-exporter${SUFFIX}"
   rm "./speedtest-exporter${SUFFIX}"
