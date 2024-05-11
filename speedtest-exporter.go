@@ -9,8 +9,11 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"slices"
 	"time"
 )
+
+const version = "1.0.0"
 
 type SpeedtestResult struct {
 	Ping struct {
@@ -94,9 +97,26 @@ func handleMetrics(m *metrics, reg *prometheus.Registry) func(http.ResponseWrite
 }
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "9798"
+	args := os.Args[1:]
+	if slices.Contains(args, "--help") || slices.Contains(args, "-h") {
+		println("Version: speedtest-exporter " + version + "\n\nUsage: speedtest-exporter [<options>]\n  -h, --help\t\t\tPrint usage information\n  -v, --version\t\t\tPrint version number\n  -p, --port\t\t\tSet the port of the application\n")
+		return
+	}
+	if slices.Contains(args, "--version") || slices.Contains(args, "-v") {
+		println(version)
+		return
+	}
+	port := "9798"
+	if slices.Contains(args, "--port") || slices.Contains(args, "-p") {
+		portLocation := slices.Index(args, "--port")
+		if portLocation == -1 {
+			portLocation = slices.Index(args, "-p")
+		}
+		if len(args) > portLocation+1 {
+			port = args[portLocation+1]
+		} else {
+			println("Invalid --port argument")
+		}
 	}
 
 	reg := prometheus.NewRegistry()
